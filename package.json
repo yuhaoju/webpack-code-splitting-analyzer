@@ -1,0 +1,8 @@
+{
+  "name": "webpack-code-splitting-analyzer",
+  "version": "0.0.1",
+  "main": "index.js",
+  "repository": "git@github.com:yuhaoju/webpack-code-splitting-analyzer.git",
+  "author": "Yuhao Ju <yuhao@tubi.tv>",
+  "license": "MIT"
+}
