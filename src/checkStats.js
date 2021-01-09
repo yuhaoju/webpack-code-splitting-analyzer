@@ -54,11 +54,9 @@ const getModulesCanBeLoadedAsync = (chunks, modules) => {
 
   const checkIfModuleCanBeLoadedAsync = (module, debug) => {
     const { chunks: relevantChunks, name, reasons } = module;
-    if (name.indexOf('node_modules/formik/') > -1) {
+    if (name.indexOf('node_modules/') > -1) {
       const pakcageNameReg = /node_modules\/((@[^/]+\/)?[^/]+)\//;
       const packageName = name.match(pakcageNameReg)[1];
-
-      console.log('name', name);
 
       // TODO: check the "initial" field for "relevantChunks"
       // relevantChunks.forEach((relevantChunkId) => {
@@ -105,11 +103,15 @@ const analyze = (content) => {
   const suggestions = [
     getAssetsTooLarge(assets),
     getModulesCanBeLoadedAsync(chunks, modules),
-  ].filter(Boolean).join('\n-----------------------\n');
+  ].filter(Boolean).join(`\n${Array.from({ length: 72 }, () => '-').join('')}\n`);
   return suggestions;
 };
 
-const exampleFilePath = './example/stats.json';
-const fileContent = readFile(exampleFilePath);
-const suggestions = analyze(fileContent);
-console.log(suggestions);
+const start = (filePath) => {
+  // const exampleFilePath = './example/stats.json';
+  const fileContent = readFile(filePath);
+  const suggestions = analyze(fileContent);
+  console.log(suggestions);
+}
+
+module.exports = start;

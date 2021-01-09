@@ -1,6 +1,12 @@
 /* eslint no-console: 0 */
 
 const fs = require('fs');
+const path = require('path');
+const { execSync } = require('child_process');
+
+const exec = (command) => {
+  execSync(command, { stdio: 'inherit' });
+};
 
 const getCommitTime = (line) => {
   const commitTimeReg = /\s(\d{10})\s[+-]\d{4}\s/; // We only need \d{10} here, wrapped with other stuff to make sure we get the correct content
@@ -57,22 +63,28 @@ const getStaticPackages = (lines) => {
   return staticPackages;
 };
 
-const start = () => {
-  // TODO: Generate git-blame.txt by this script.
+const start = (filePath) => {
+  const resolvedPath = path.resolve(process.cwd(), filePath);
+  const tempFilePath = path.resolve(__dirname, '../git-blame.tmp');
+  console.log('resolvedPath', resolvedPath);
 
-  const gitBlameContent = fs.readFileSync('./test/git-blame.txt', 'utf-8');
+  // Generate git-blame.txt by this script.
+  exec(`git blame -t ${resolvedPath} >${tempFilePath} 2>&1`)
+
+  const gitBlameContent = fs.readFileSync(tempFilePath, 'utf-8');
   const lines = gitBlameContent.split('\n');
   const staticPackages = getStaticPackages(lines);
 
   let suggestion = '';
-  Object.keys(staticPackages).sort().forEach((timeRange) => {
+  Object.keys(staticPackages).sort().forEach((timeRange, index) => {
     const packageNames = staticPackages[timeRange];
     if (packageNames.length > 0) {
-      suggestion += `The following module(s) have not been upgraded their versions for ${timeRange}:\n` +
-                  packageNames.map((name) => name).join('\n') + '\n';
+      suggestion += (index === 0 ? '' : `${Array.from({ length: 72 }, () => '-').join('')}\n`) +
+                  `The following module(s) have not been upgraded their versions for ${timeRange}:\n` +
+                  packageNames.map((name) => `- ${name}`).join('\n') + '\n';
     }
   });
   console.log(suggestion);
 };
 
-start();
+module.exports = start;
