@@ -1,9 +1,11 @@
 # webpack-code-splitting-analyzer
 
-## TODO
+This is a tool to analyze Webpack bundle and give suggestions on code splitting.
 
-- Analyze package.json
-- Analyze stats.json and find how to split chunks
-  - Lazyload
-  - Size
-  - 3rd party using babel warning
+## How to install
+
+`npm install --save-dev webpack-code-splitting-analyzer` or `yarn add webpack-code-splitting-analyzer --dev`
+## Commands
+
+- `npx wcsa stats test/stats.json` - Analyze Webpack bundle profile and give code splitting suggestions
+- `npx wcsa packages package.json` - Analyze packages that have not been updated for a long time
