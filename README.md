@@ -6,5 +6,4 @@
 - Analyze stats.json and find how to split chunks
   - Lazyload
   - Size
-  -
-- Visualization
+  - 3rd party using babel warning

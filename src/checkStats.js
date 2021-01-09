@@ -54,9 +54,11 @@ const getModulesCanBeLoadedAsync = (chunks, modules) => {
 
   const checkIfModuleCanBeLoadedAsync = (module, debug) => {
     const { chunks: relevantChunks, name, reasons } = module;
-    if (name.indexOf('node_modules/') > -1) {
+    if (name.indexOf('node_modules/formik/') > -1) {
       const pakcageNameReg = /node_modules\/((@[^/]+\/)?[^/]+)\//;
       const packageName = name.match(pakcageNameReg)[1];
+
+      console.log('name', name);
 
       // TODO: check the "initial" field for "relevantChunks"
       // relevantChunks.forEach((relevantChunkId) => {
