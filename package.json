@@ -1,0 +1,14 @@
+{
+  "name": "webpack-code-splitting-analyzer",
+  "version": "0.0.1",
+  "bin": {
+    "wcsa": "bin/webpack-code-splitting-analyzer"
+  },
+  "repository": "git@github.com:yuhaoju/webpack-code-splitting-analyzer.git",
+  "author": "Yuhao Ju <yuhao@tubi.tv>",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^6.2.1",
+    "webpack-code-splitting-analyzer": "./"
+  }
+}
